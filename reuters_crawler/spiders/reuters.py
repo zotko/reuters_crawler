@@ -25,23 +25,23 @@ class ReutersSpider(scrapy.Spider):
         driver = response.request.meta['driver']
 
         # Click cookies banner
-        # try:
-        #     element = WebDriverWait(driver, 10).until(
-        #         EC.presence_of_element_located((By.CLASS_NAME, 'evidon-barrier-acceptbutton'))
-        #     )
-        #     element.click()
-        # except TimeoutException:
-        #     pass
-        #
-        # # Show all articles
-        # while True:
-        #     element = WebDriverWait(driver, 10).until(
-        #         EC.presence_of_element_located((By.CLASS_NAME, 'search-result-more-txt'))
-        #     )
-        #     if element.text.lower() == 'keine weiteren ergebnisse':
-        #         break
-        #     else:
-        #         element.click()
+        try:
+            element = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CLASS_NAME, 'evidon-barrier-acceptbutton'))
+            )
+            element.click()
+        except TimeoutException:
+            pass
+
+        # Show all articles
+        while True:
+            element = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CLASS_NAME, 'search-result-more-txt'))
+            )
+            if element.text.lower() == 'keine weiteren ergebnisse':
+                break
+            else:
+                element.click()
 
         links = driver.find_elements_by_css_selector('.search-result-title a')
 
